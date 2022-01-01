@@ -34,7 +34,7 @@ function SetCookie(name, value){
 function MakeRequest(requestType, functionName, parameter){
   let xhr = new XMLHttpRequest();
     xhr.open(requestType, REQ_URL);
-    xhr.send(JSON.stringify(new Object({token: cookies["Token"], function: functionName, paramter: parameter})));   
+    xhr.send(JSON.stringify(new Object({token: cookies["Token"], functionName: functionName, paramter: parameter})));   
   return xhr;
 }
 
