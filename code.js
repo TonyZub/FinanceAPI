@@ -32,10 +32,12 @@ function SetCookie(name, value){
 // #region Request functions
 
 function MakeRequest(requestType, functionName, parameter){
-  let xhr = new XMLHttpRequest();
-    xhr.open(requestType, REQ_URL);
-    xhr.send(JSON.stringify(new Object({token: cookies["Token"], functionName: functionName, paramter: parameter})));   
-  return xhr;
+  let request = new XMLHttpRequest();
+  let requestBody = JSON.stringify(new Object({token: cookies["Token"], functionName: functionName, paramter: parameter}));
+  console.log(requestBody);
+  request.open(requestType, REQ_URL);
+  request.send(requestBody);   
+  return request;
 }
 
 function CheckToken(){
