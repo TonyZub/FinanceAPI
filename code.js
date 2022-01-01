@@ -1,6 +1,6 @@
 // #region Constants
 
-const REQ_URL = "https://script.google.com/macros/s/AKfycbzHcmNqLO4qUYBl7A0C6Me39Fmhvz3ibQzzagtq6YwtDj0-ZfdtVWU9sI1_5qC3wrop/exec";
+const REQ_URL = "https://script.google.com/macros/s/AKfycbzcUmkPLXeOB2QyTfCAO6ns2uMhaanMHUBHvEU2a4TYKZsOJTrXZPdgPqK70NHbPpQX/exec";
 const NOT_FOUND_URL = "https://tonyzub.github.io/FinanceAPI/notFoundPage"
 
 // #endregion
