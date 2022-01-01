@@ -1,7 +1,7 @@
 // #region Constants
 
 const REQ_URL = "https://script.google.com/macros/s/AKfycbzHcmNqLO4qUYBl7A0C6Me39Fmhvz3ibQzzagtq6YwtDj0-ZfdtVWU9sI1_5qC3wrop/exec";
-const NOT_FOUND = "/404"
+const NOT_FOUND_URL = "/NotFound"
 
 // #endregion
 
@@ -39,11 +39,11 @@ function MakeRequest(requestType, functionName, parameter){
 }
 
 function CheckToken(){
-  let request = MakeRequest("GET", "CheckToken");
+  let request = MakeRequest("POST", "CheckToken");
   request.onload = function() {
     if (request.status != 200) {
       alert("status error");
-      // connection error - request status error
+      console.log(request.status);
     } 
     else {
       let responseJSON = JSON.parse(xhr.response);
