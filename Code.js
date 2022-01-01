@@ -46,7 +46,7 @@ function CheckToken(){
       console.log(request.status);
     } 
     else {
-      let responseJSON = JSON.parse(xhr.response);
+      let responseJSON = JSON.parse(request.response);
       console.log(responseJSON);
       alert("success");
     };
