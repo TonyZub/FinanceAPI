@@ -61,8 +61,8 @@ function CheckToken(){
       }
     } 
     else {
-      console.log(responseJSON);
       let responseJSON = JSON.parse(request.response);
+      console.log(responseJSON);
       if(responseJSON.isSignedIn){
         OpenURL(MAIN_PAGE_URL, PAGE_TARGETS.self);
       }
