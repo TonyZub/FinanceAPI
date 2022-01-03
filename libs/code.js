@@ -1,7 +1,14 @@
 // #region Constants
 
 const REQ_URL = "https://script.google.com/macros/s/AKfycbzcUmkPLXeOB2QyTfCAO6ns2uMhaanMHUBHvEU2a4TYKZsOJTrXZPdgPqK70NHbPpQX/exec";
-const NOT_FOUND_URL = "https://tonyzub.github.io/FinanceAPI/notFoundPage"
+const NOT_FOUND_PAGE_URL = "FinanceAPI/notFound";
+const SIGNIN_PAGE_URL = "FinanceAPI/signin";
+const MAIN_PAGE_URL = "FinanceAPI/main";
+const PAGE_TARGETS =
+{
+  self: "_self",
+  blank: "_blank"
+}
 
 // #endregion
 
@@ -34,7 +41,6 @@ function SetCookie(name, value){
 function MakeRequest(requestType, functionName, parameter){
   let request = new XMLHttpRequest();
   let requestBody = JSON.stringify(new Object({token: cookies["Token"], functionName: functionName, paramter: parameter}));
-  console.log(requestBody);
   request.open(requestType, REQ_URL);
   request.send(requestBody);   
   return request;
@@ -44,18 +50,35 @@ function CheckToken(){
   let request = MakeRequest("POST", "CheckToken");
   request.onload = function() {
     if (request.status != 200) {
-      alert("status error");
       console.log(request.status);
+      switch(request.status){
+        case 404:
+          OpenURL(NOT_FOUND_URL, PAGE_TARGETS.self);
+          break;
+        default:
+          alert("Server error occured");
+          break;
+      }
     } 
     else {
-      let responseJSON = JSON.parse(request.response);
       console.log(responseJSON);
-      alert("success");
+      let responseJSON = JSON.parse(request.response);
+      if(responseJSON.isSignedIn){
+        OpenURL(MAIN_PAGE_URL, PAGE_TARGETS.self);
+      }
+      else{
+        OpenURL(SIGNIN_PAGE_URL, PAGE_TARGETS.self);
+      }
     };
   };
   request.onerror = function(request) {
-    alert("connection error");
+    alert("Connection error");
   };
+}
+
+function OpenURL(URL, target){
+  let tab = window.open(URL,target);
+  if(target == PAGE_TARGETS.blank) tab.focus();
 }
 
 // #endregion
