@@ -1,9 +1,9 @@
 // #region Constants
 
 const REQ_URL = "https://script.google.com/macros/s/AKfycbzcUmkPLXeOB2QyTfCAO6ns2uMhaanMHUBHvEU2a4TYKZsOJTrXZPdgPqK70NHbPpQX/exec";
-const NOT_FOUND_PAGE_URL = "FinanceAPI/notFound";
-const SIGNIN_PAGE_URL = "FinanceAPI/signin";
-const MAIN_PAGE_URL = "FinanceAPI/main";
+const NOT_FOUND_PAGE_URL = "notFound";
+const SIGNIN_PAGE_URL = "signin";
+const MAIN_PAGE_URL = "main";
 const PAGE_TARGETS =
 {
   self: "_self",
