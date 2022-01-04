@@ -11,7 +11,7 @@
   </head>
   <body class="text-center"> 
     <main class="form-signin">
-      <form name="registerForm" method="post" onsubmit="event.preventDefault(); TryRegister();">
+      <form name="registerForm" onsubmit="event.preventDefault(); TryRegister();">
         <img class="mb-4" src="https://test-spb.ru/wp-content/themes/myTheme/images/clientsPage/fornewlogo.jpg" alt="" width="200" height="150">
         <h1 class="h3 mb-3 fw-normal">Please register</h1>
         <div class="form-floating">
@@ -36,10 +36,6 @@
       const emailField = GetElementById("floatingEmail");
       const usernameField = GetElementById("floatingName");
       const passwordField = GetElementById("floatingPassword");
-
-      function SetFormAction(){
-        document.registerForm.action = REQ_URL;
-      }
 
       function ChangeElementsActivity(doDisable){
         submitButton.disabled = doDisable;
@@ -74,10 +70,6 @@
           alert("Connection error");
           ChangeElementsActivity(false);
         };
-      }
-
-      window.onload = function() {
-        SetFormAction();
       }
 
     </script>
