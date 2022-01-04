@@ -82,3 +82,24 @@ function OpenURL(URL, target){
 }
 
 // #endregion
+
+
+// #region Service functions
+
+function DelayCall(delegate, seconds, doRepeat){
+  return doRepeat ? setInterval(() => {delegate()},seconds * 1000) : setTimeout(() => {delegate()},seconds * 1000); 
+}
+
+function GetElementById(id){
+  return document.getElementById(id);
+}
+
+function GetElementsByClass(className){
+  return document.getElementsByClassName(className);
+}
+
+function GetELementsByName(name){
+  return document.getElementsByName(name);
+}
+
+// #endregion

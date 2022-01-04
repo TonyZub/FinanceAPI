@@ -1,0 +1,57 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Email validation</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <script type="text/javascript" src="https://tonyzub.github.io/FinanceAPI/libs/code.js"></script>
+  </head>
+  <body> 
+  </body>
+  <script>
+    
+    const VALIDATION_TOKEN_NAME = "validationToken";
+    const TIME_TO_CHANGE_PAGE = 10; // seconds
+
+    function TryValidateEmail(){
+      let url = new URL(window.location.href);
+      let validationToken = url.searchParams.get(VALIDATION_TOKEN_NAME);
+      CheckEmail(validationToken);
+    }
+
+    function CheckEmail(validationToken){
+      let request = MakeRequest("POST", "CheckEmail", validationToken);
+      request.onload = function() {
+        if (request.status != 200) {
+          console.log(request.status);
+          switch(request.status){
+            case 404:
+              OpenURL(NOT_FOUND_URL, PAGE_TARGETS.self);
+              break;
+            default:
+              alert("Server error occured, try later");
+              break;
+          }
+        } 
+        else {
+          let responseJSON = JSON.parse(request.response);
+          console.log(responseJSON);
+          if(responseJSON.isValidated){
+            OpenURL(MAIN_PAGE_URL, PAGE_TARGETS.self);
+          }
+          else{
+            alert("Your email is not validated, the link is too old");
+            DelayCall(() => OpenURL(SIGNIN_PAGE_URL, PAGE_TARGETS.self), TIME_TO_CHANGE_PAGE);
+          }
+        };
+      };
+      request.onerror = function(request) {
+        alert("Connection error");
+      };
+    }
+
+    window.onload = function() {
+      TryValidateEmail();
+    };
+  </script>
+</html>
