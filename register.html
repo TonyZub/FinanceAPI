@@ -11,7 +11,7 @@
   </head>
   <body class="text-center"> 
     <main class="form-signin">
-      <form name="registerForm" method="post">
+      <form name="registerForm" method="post" onsubmit="event.preventDefault(); TryRegister();">
         <img class="mb-4" src="https://test-spb.ru/wp-content/themes/myTheme/images/clientsPage/fornewlogo.jpg" alt="" width="200" height="150">
         <h1 class="h3 mb-3 fw-normal">Please register</h1>
         <div class="form-floating">
@@ -38,7 +38,7 @@
       const passwordField = GetElementById("floatingPassword");
 
       function SetFormAction(){
-        document.signinForm.action = REQ_URL;
+        document.registerForm.action = REQ_URL;
       }
 
       function ChangeElementsActivity(doDisable){
@@ -48,7 +48,7 @@
         passwordField.disabled = doDisable;
       }
 
-      function TrySignIn(){
+      function TryRegister(){
         ChangeElementsActivity(true);
         let email = emailField.value;
         let username = usernameField.value;
