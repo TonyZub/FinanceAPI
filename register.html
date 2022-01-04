@@ -15,26 +15,71 @@
         <img class="mb-4" src="https://test-spb.ru/wp-content/themes/myTheme/images/clientsPage/fornewlogo.jpg" alt="" width="200" height="150">
         <h1 class="h3 mb-3 fw-normal">Please register</h1>
         <div class="form-floating">
-          <input required type="email" name="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-          <label for="floatingInput">Email address</label>
+          <input required type="email" name="email" class="form-control" id="floatingEmail" placeholder="name@example.com">
+          <label for="floatingEmail">Email address</label>
         </div>
         <div class="form-floating">
-          <input required type="text" name="username" class="form-control" id="floatingName" placeholder="username">
+          <input required type="text" name="username" class="form-control" id="floatingName" placeholder="Username">
           <label for="floatingName">Username</label>
         </div>
         <div class="form-floating">
           <input required type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
           <label for="floatingPassword">Password</label>
         </div>
-        <input type="hidden" name="functionName" value="checkRegister">
-        <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit" id="submitBtn">Register</button>
       </form>
       <p class="mt-5 mb-3 text-muted">© 2022-2025</p>
     </main>
     <script type="text/javascript">
-      window.onload = function() {
-          document.registerForm.action = REQ_URL;
+
+      const submitButton = GetElementById("submitBtn");
+      const emailField = GetElementById("floatingEmail");
+      const usernameField = GetElementById("floatingName");
+      const passwordField = GetElementById("floatingPassword");
+
+      function SetFormAction(){
+        document.signinForm.action = REQ_URL;
       }
-  </script>
+
+      function ChangeElementsActivity(doDisable){
+        submitButton.disabled = doDisable;
+        emailField.disabled = doDisable;
+        usernameField.disabled = doDisable;
+        passwordField.disabled = doDisable;
+      }
+
+      function TrySignIn(){
+        ChangeElementsActivity(true);
+        let email = emailField.value;
+        let username = usernameField.value;
+        let password = passwordField.value;
+        let request = MakeRequest("POST", "CheckRegistration", JSON.stringify(new Object({email: email, username: username, password: password})));
+        request.onload = function() {
+          if (request.status != 200) {
+            console.log(request.status);
+            alert("Server error occured, try later");
+          } 
+          else {
+            let responseJSON = JSON.parse(request.response);
+            if(responseJSON.isRegistered){
+              OpenURL(EMAIL_NOTIFICATION_URL, PAGE_TARGETS.self);
+            }
+            else{
+              alert(responseJSON.error);
+            }
+          };
+          ChangeElementsActivity(false);
+        };
+        request.onerror = function(request) {
+          alert("Connection error");
+          ChangeElementsActivity(false);
+        };
+      }
+
+      window.onload = function() {
+        SetFormAction();
+      }
+
+    </script>
   </body>
 </html>
