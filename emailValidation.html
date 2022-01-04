@@ -37,6 +37,7 @@
           let responseJSON = JSON.parse(request.response);
           console.log(responseJSON);
           if(responseJSON.isValidated){
+            SetCookie("Token", responseJSON.token);
             OpenURL(MAIN_PAGE_URL, PAGE_TARGETS.self);
           }
           else{
