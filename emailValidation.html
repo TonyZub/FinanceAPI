@@ -18,10 +18,11 @@
       let url = new URL(window.location.href);
       let checkEmailFunctionName = url.searchParams.get(CHECK_EMAIL_FUNCTION_PARAMETER);
       let validationToken = url.searchParams.get(VALIDATION_TOKEN_PARAMETER);
-      CheckEmail(validationToken);
+      CheckEmail(functionName, validationToken);
     }
 
     function CheckEmail(functionName, validationToken){
+      console.log(functionName +" " + validationToken);
       let request = MakeRequest("POST", functionName, validationToken);
       request.onload = function() {
         if (request.status != 200) {
