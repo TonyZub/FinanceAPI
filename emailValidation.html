@@ -18,11 +18,10 @@
       let url = new URL(window.location.href);
       let checkEmailFunctionName = url.searchParams.get(CHECK_EMAIL_FUNCTION_PARAMETER);
       let validationToken = url.searchParams.get(VALIDATION_TOKEN_PARAMETER);
-      CheckEmail(functionName, validationToken);
+      CheckEmail(checkEmailFunctionName, validationToken);
     }
 
     function CheckEmail(functionName, validationToken){
-      console.log(functionName +" " + validationToken);
       let request = MakeRequest("POST", functionName, validationToken);
       request.onload = function() {
         if (request.status != 200) {
@@ -45,7 +44,7 @@
           }
           else{
             alert("Your email is not validated, the link is too old");
-            DelayCall(() => OpenURL(SIGNIN_PAGE_URL, PAGE_TARGETS.self), TIME_TO_CHANGE_PAGE);
+            //DelayCall(() => OpenURL(SIGNIN_PAGE_URL, PAGE_TARGETS.self), TIME_TO_CHANGE_PAGE);
           }
         };
       };
