@@ -10,17 +10,19 @@
   </body>
   <script>
     
-    const VALIDATION_TOKEN_NAME = "validationToken";
+    const CHECK_EMAIL_FUNCTION_PARAMETER = "func";
+    const VALIDATION_TOKEN_PARAMETER = "param";
     const TIME_TO_CHANGE_PAGE = 10; // seconds
 
     function TryValidateEmail(){
       let url = new URL(window.location.href);
-      let validationToken = url.searchParams.get(VALIDATION_TOKEN_NAME);
+      let checkEmailFunctionName = url.searchParams.get(CHECK_EMAIL_FUNCTION_PARAMETER);
+      let validationToken = url.searchParams.get(VALIDATION_TOKEN_PARAMETER);
       CheckEmail(validationToken);
     }
 
-    function CheckEmail(validationToken){
-      let request = MakeRequest("POST", "CheckEmail", validationToken);
+    function CheckEmail(functionName, validationToken){
+      let request = MakeRequest("POST", functionName, validationToken);
       request.onload = function() {
         if (request.status != 200) {
           console.log(request.status);
