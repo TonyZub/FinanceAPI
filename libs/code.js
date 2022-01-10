@@ -1,6 +1,7 @@
 // #region Constants
 
 const REQ_URL = "https://script.google.com/macros/s/AKfycbzcUmkPLXeOB2QyTfCAO6ns2uMhaanMHUBHvEU2a4TYKZsOJTrXZPdgPqK70NHbPpQX/exec";
+const ROOT_URL = "https://tonyzub.github.io/FinanceAPI/";
 const NOT_FOUND_PAGE_URL = "notFound";
 const SIGNIN_PAGE_URL = "signin";
 const MAIN_PAGE_URL = "main";
