@@ -49,7 +49,7 @@ function MakeRequest(requestType, functionName, parameter){
   return request;
 }
 
-function CheckToken(){
+function CheckToken(isSigning){
   let request = MakeRequest("POST", "CheckToken");
   request.onload = function() {
     if (request.status != 200) {
@@ -70,7 +70,7 @@ function CheckToken(){
         OpenURL(MAIN_PAGE_URL, PAGE_TARGETS.self);
       }
       else{
-        OpenURL(SIGNIN_PAGE_URL, PAGE_TARGETS.self);
+        if(!isSigning) OpenURL(SIGNIN_PAGE_URL, PAGE_TARGETS.self);     
       }
     };
   };
