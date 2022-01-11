@@ -53,6 +53,7 @@
             let responseJSON = JSON.parse(request.response);
             if(responseJSON.isLoggedIn){
               SetCookie("Token", responseJSON.token);
+              SetCookie("Username", responseJSON.username);
               OpenURL(MAIN_PAGE_URL, PAGE_TARGETS.self);
             }
             else{
