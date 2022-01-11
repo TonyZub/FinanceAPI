@@ -12,35 +12,134 @@
   <body> 
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
-        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu">
           Menu
         </button>
         <h1 id="pageName"></h1>
-        <button class="btn btn-primary" type="button" id="signOut">Info</button>
+        <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasInfo" aria-controls="offcanvasInfo">Info</button>
       </div>
     </nav>
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
+        <h5 class="offcanvas-title" id="offcanvasMenuLabel">Menu</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
         <p id="username"></p>
         <div class="btn-group-vertical w-100 gap-2">
           <button class="btn btn-info" type="button" id="news">News</button>
+          <button class="btn btn-info" type="button" id="data">Data</button>
           <button class="btn btn-info" type="button" id="operations">Operations</button>
-          <button class="btn btn-info" type="button" id="wallets">Wallets</button>
-          <button class="btn btn-info" type="button" id="articles">Articles</button>
-          <button class="btn btn-info" type="button" id="projectss">Projects</button>
+          <button class="btn btn-secondary" type="button" id="wallets">Wallets</button>
+          <button class="btn btn-secondary" type="button" id="articles">Articles</button>
+          <button class="btn btn-secondary" type="button" id="projectss">Projects</button>
           <button class="btn btn-primary" type="button" id="signOut" onclick="TrySignOut()">Logout</button>
         </div>
       </div>
     </div>
+    <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasInfo" aria-labelledby="offcanvasInfoLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasInfoLabel">Info</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+      </div>
+    </div>
     <script type="text/javascript">
       
+      const offcanvasMenu = new bootstrap.Offcanvas(GetElementById("offcanvasMenu"));
+      const offcanvasInfo = new bootstrap.Offcanvas(GetElementById("offcanvasInfo"));
+
+      function CloseMenu(){
+        offcanvasMenu.hide();
+      }
+
+    </script>
+    <script type="text/javascript">
+      
+      const PAGE_NAME_PARAMETER = "page";
+      const NEWS_PAGE_NAME = "news";
+      const DATA_PAGE_NAME = "data";
+      const OPERATIONS_PAGE_NAME = "operations";
+      const WALLETS_PAGE_NAME = "wallets";
+      const ARTICLES_PAGE_NAME = "articles";
+      const PROJECTS_PAGE_NAME = "projects";
       const usernameField = GetElementById("username");
+      const pageNameField = GetElementById("pageName");
       const signOutButton = GetElementById("signOut");
+      var currentURL = new URL(window.location.href);
+      var currentPage = currentURL.searchParams.get(PAGE_NAME_PARAMETER);
       var currentUser;
+
+      function GetPageData(){
+        switch(currentPage){
+          case NEWS_PAGE_NAME:
+            LoadNewsPage();
+            break;
+          case DATA_PAGE_NAME:
+            LoadDataPage();
+            break;
+          case OPERATIONS_PAGE_NAME:
+            LoadOperationsPage();
+            break;
+          case WALLETS_PAGE_NAME:
+            LoadWalletsPage();
+            break;
+          case ARTICLES_PAGE_NAME:
+            LoadArticlesPage();
+            break;
+          case PROJECTS_PAGE_NAME:
+            LoadProjectsPage();
+            break;
+          default:
+            LoadNewsPage();
+            break;
+        }
+      }
+
+      function SetPageNameParameter(pageName){
+        currentURL.searchParams.set(PAGE_NAME_PARAMETER, pageName);
+      }
+
+      function SetPageName(pageName){
+        pageNameField.innerHTML = Titleize(pageName);
+      }
+
+      function PreparePage(pageName){
+        CloseMenu();
+        SetPageNameParameter(NEWS_PAGE_NAME);
+        SetPageName(NEWS_PAGE_NAME);
+      }
+
+      function LoadNewsPage(){
+        PreparePage(NEWS_PAGE_NAME);
+        //TODO
+      }
+
+      function LoadDataPage(){
+        PreparePage(DATA_PAGE_NAME);
+        //TODO
+      }
+
+      function LoadOperationsPage(){
+        PreparePage(OPERATIONS_PAGE_NAME);
+        //TODO
+      }
+
+      function LoadWalletsPage(){
+        PreparePage(WALLETS_PAGE_NAME);
+        //TODO
+      }
+
+      function LoadArticlesPage(){
+        PreparePage(ARTICLES_PAGE_NAME);
+        //TODO
+      }
+
+      function LoadProjectsPage(){
+        PreparePage(PROJECTS_PAGE_NAME);
+        //TODO
+      }
 
       function TrySignOut(){
         signOutButton.disabled = true;
@@ -75,6 +174,7 @@
 
       window.onload = function() {
         SetUser();
+        GetPageData();
       };
 
     </script>
