@@ -45,10 +45,21 @@
       <div class="offcanvas-body">
       </div>
     </div>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDetails" aria-labelledby="offcanvasDetailsLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasDetailsLabel">Info</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+      </div>
+    </div>
+    <div class="main" id="main">
+    </div>
     <script type="text/javascript">
       
       const offcanvasMenu = new bootstrap.Offcanvas(GetElementById("offcanvasMenu"));
       const offcanvasInfo = new bootstrap.Offcanvas(GetElementById("offcanvasInfo"));
+      const offcanvasDetails = new bootstrap.Offcanvas(GetElementById("offcanvasDetails"));
 
       function CloseMenu(){
         offcanvasMenu.hide();
@@ -66,6 +77,7 @@
       const PROJECTS_PAGE_NAME = "projects";
       const usernameField = GetElementById("username");
       const pageNameField = GetElementById("pageName");
+      const mainDiv = GetElementById("main");
       const signOutButton = GetElementById("signOut");
       var currentURL = new URL(window.location.href);
       var currentPage = currentURL.searchParams.get(PAGE_NAME_PARAMETER);
@@ -118,7 +130,26 @@
 
       function LoadNewsPage(){
         PreparePage(NEWS_PAGE_NAME);
-        //TODO
+        mainDiv.innerHTML = PRELOADER_HTML;
+        let request = MakeRequest("POST", "GetNews");
+        request.onload = function() {
+          if (request.status != 200) {
+            console.log(request.status);
+            alert("Server error occured, try later");
+          } 
+          else {
+            let responseJSON = JSON.parse(request.response);
+            if(responseJSON.hasNews){
+              mainDiv.innerHTML = responseJSON.newsHTML;
+            }
+            else{
+              alert("An error occured");
+            }
+          };
+        };
+        request.onerror = function(request) {
+          alert("Connection error");
+        };
       }
 
       function LoadDataPage(){
