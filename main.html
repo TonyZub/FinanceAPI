@@ -128,10 +128,10 @@
         SetPageName(pageName);
       }
 
-      function LoadNewsPage(){
-        PreparePage(NEWS_PAGE_NAME);
+      function MakeDataRequest(functionName, pageName){
+        PreparePage(pageName);
         mainDiv.innerHTML = PRELOADER_HTML;
-        let request = MakeRequest("POST", "GetNews");
+        let request = MakeRequest("POST", functionName);
         request.onload = function() {
           if (request.status != 200) {
             console.log(request.status);
@@ -139,51 +139,41 @@
           } 
           else {
             let responseJSON = JSON.parse(request.response);
-            mainDiv.innerHTML = responseJSON.content;
+            if(responseJSON.isSignedIn){
+              mainDiv.innerHTML = responseJSON.content;
+            }
+            else{
+              OpenURL(SIGNIN_PAGE_URL, PAGE_TARGETS.self);
+            }          
           };
         };
         request.onerror = function(request) {
           alert("Connection error");
         };
+      }
+
+      function LoadNewsPage(){
+        MakeDataRequest("GetNews", NEWS_PAGE_NAME);
       }
 
       function LoadDataPage(){
-        PreparePage(DATA_PAGE_NAME);
-        mainDiv.innerHTML = PRELOADER_HTML;
-        let request = MakeRequest("POST", "GetData");
-        request.onload = function() {
-          if (request.status != 200) {
-            console.log(request.status);
-            alert("Server error occured, try later");
-          } 
-          else {
-            let responseJSON = JSON.parse(request.response);
-            mainDiv.innerHTML = responseJSON.content;
-          };
-        };
-        request.onerror = function(request) {
-          alert("Connection error");
-        };
+        MakeDataRequest("GetData", DATA_PAGE_NAME);
       }
 
       function LoadOperationsPage(){
-        PreparePage(OPERATIONS_PAGE_NAME);
-        //TODO
+        MakeDataRequest("GetOperations", OPERATIONS_PAGE_NAME);
       }
 
       function LoadWalletsPage(){
-        PreparePage(WALLETS_PAGE_NAME);
-        //TODO
+        MakeDataRequest("GetWallets", WALLETS_PAGE_NAME);
       }
 
       function LoadArticlesPage(){
-        PreparePage(ARTICLES_PAGE_NAME);
-        //TODO
+        MakeDataRequest("GetArticles", ARTICLES_PAGE_NAME);
       }
 
       function LoadProjectsPage(){
-        PreparePage(PROJECTS_PAGE_NAME);
-        //TODO
+        MakeDataRequest("GetProjects", PROJECTS_PAGE_NAME);
       }
 
       function TrySignOut(){
