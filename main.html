@@ -54,6 +54,7 @@
             let responseJSON = JSON.parse(request.response);
             if(responseJSON.isLoggedOut){
               SetCookie("Token", "");
+              SetCookie("Username", "");
               OpenURL(ROOT_URL, PAGE_TARGETS.self);
             }
             else{
@@ -68,31 +69,12 @@
         };
       }
 
-      function GetUser(){
-        let request = MakeRequest("POST", "GetUser");
-        request.onload = function() {
-          if (request.status != 200) {
-            console.log(request.status);
-            alert("Server error occured, user not found");
-          } 
-          else {
-            let responseJSON = JSON.parse(request.response);
-            if(responseJSON.username != ""){
-              SetCookie("Username", responseJSON.username);
-              usernameField.innerHTML = "User: " + responseJSON.username;
-            }
-            else{
-              OpenURL(ROOT_URL, PAGE_TARGETS.self);
-            }
-          };
-        };
-        request.onerror = function(request) {
-          console.log("Connection error");
-        };
+      function SetUser(){
+        usernameField.innerHTML = "User: " + cookies["Username"];
       }
 
       window.onload = function() {
-        GetUser();
+        SetUser();
       };
 
     </script>
