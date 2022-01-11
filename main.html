@@ -15,35 +15,32 @@
         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
           Menu
         </button>
-        <h1 id="pageName">News</h1>
-        <button class="btn btn-primary" type="button" id="signOut" onclick="TrySignOut()">Logout</button>
+        <h1 id="pageName"></h1>
+        <button class="btn btn-primary" type="button" id="signOut">Info</button>
       </div>
     </nav>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-        <p id="username">User</p>
-        <div>
-          Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
-        </div>
-        <div class="dropdown mt-3">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
-            Dropdown button
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
+        <p id="username"></p>
+        <div class="btn-group-vertical w-100 gap-2">
+          <button class="btn btn-info" type="button" id="news">News</button>
+          <button class="btn btn-info" type="button" id="operations">Operations</button>
+          <button class="btn btn-info" type="button" id="wallets">Wallets</button>
+          <button class="btn btn-info" type="button" id="articles">Articles</button>
+          <button class="btn btn-info" type="button" id="projectss">Projects</button>
+          <button class="btn btn-primary" type="button" id="signOut" onclick="TrySignOut()">Logout</button>
         </div>
       </div>
     </div>
     <script type="text/javascript">
       
+      const usernameField = GetElementById("username");
       const signOutButton = GetElementById("signOut");
+      var currentUser;
 
       function TrySignOut(){
         signOutButton.disabled = true;
@@ -70,6 +67,33 @@
           signOutButton.disabled = false;
         };
       }
+
+      function GetUser(){
+        let request = MakeRequest("POST", "GetUser");
+        request.onload = function() {
+          if (request.status != 200) {
+            console.log(request.status);
+            alert("Server error occured, user not found");
+          } 
+          else {
+            let responseJSON = JSON.parse(request.response);
+            if(responseJSON.username != ""){
+              SetCookie("Username", responseJSON.username);
+              usernameField.innerHTML = "User: " + responseJSON.username;
+            }
+            else{
+              OpenURL(ROOT_URL, PAGE_TARGETS.self);
+            }
+          };
+        };
+        request.onerror = function(request) {
+          console.log("Connection error");
+        };
+      }
+
+      window.onload = function() {
+        GetUser();
+      };
 
     </script>
   </body>
