@@ -27,12 +27,12 @@
       <div class="offcanvas-body">
         <p id="username"></p>
         <div class="btn-group-vertical w-100 gap-2">
-          <button class="btn btn-info" type="button" id="news">News</button>
-          <button class="btn btn-info" type="button" id="data">Data</button>
-          <button class="btn btn-info" type="button" id="operations">Operations</button>
-          <button class="btn btn-secondary" type="button" id="wallets">Wallets</button>
-          <button class="btn btn-secondary" type="button" id="articles">Articles</button>
-          <button class="btn btn-secondary" type="button" id="projectss">Projects</button>
+          <button class="btn btn-info" type="button" id="news" onclick="LoadNewsPage()">News</button>
+          <button class="btn btn-info" type="button" id="data" onclick="LoadDataPage()">Data</button>
+          <button class="btn btn-info" type="button" id="operations" onclick="LoadOperationsPage()">Operations</button>
+          <button class="btn btn-secondary" type="button" id="wallets" onclick="LoadWalletsPage()">Wallets</button>
+          <button class="btn btn-secondary" type="button" id="articles" onclick="LoadArticlesPage()">Articles</button>
+          <button class="btn btn-secondary" type="button" id="projectss" onclick="LoadProjectsPage()">Projects</button>
           <button class="btn btn-primary" type="button" id="signOut" onclick="TrySignOut()">Logout</button>
         </div>
       </div>
@@ -98,7 +98,12 @@
       }
 
       function SetPageNameParameter(pageName){
-        currentURL.searchParams.set(PAGE_NAME_PARAMETER, pageName);
+        let url = currentURL;
+        let search_params = url.searchParams;
+        search_params.set(PAGE_NAME_PARAMETER, pageName);
+        url.search = search_params.toString();
+        let new_url = url.toString();
+        history.replaceState(null, null, new_url);
       }
 
       function SetPageName(pageName){
@@ -107,8 +112,8 @@
 
       function PreparePage(pageName){
         CloseMenu();
-        SetPageNameParameter(NEWS_PAGE_NAME);
-        SetPageName(NEWS_PAGE_NAME);
+        SetPageNameParameter(pageName);
+        SetPageName(pageName);
       }
 
       function LoadNewsPage(){
@@ -154,7 +159,7 @@
             if(responseJSON.isLoggedOut){
               SetCookie("Token", "");
               SetCookie("Username", "");
-              OpenURL(ROOT_URL, PAGE_TARGETS.self);
+              OpenURL(SIGNIN_PAGE_URL, PAGE_TARGETS.self);
             }
             else{
               alert("An error occured");
