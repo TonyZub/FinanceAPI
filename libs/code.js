@@ -11,8 +11,8 @@ const PAGE_TARGETS =
   self: "_self",
   blank: "_blank"
 }
-const PRELOADER_HTML = '<div class="spinner-border" role="status">' +
-                       'span class="visually-hidden">Loading...</span>' +
+const PRELOADER_HTML =  '<div class="spinner-border" role="status">' +
+                        '<span class="visually-hidden">Loading...</span>' +
                         '/div>';
 
 // #endregion
