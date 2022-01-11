@@ -24,17 +24,19 @@
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit" id="submitBtn">Sign in</button>
       </form>
-      <a class="w-100 btn btn-primary btn-lg" role="button" href="register">Register</a>
+      <a class="w-100 btn btn-primary btn-lg" role="button" href="register" id="registerBtn">Register</a>
       <p class="mt-5 mb-3 text-muted">© 2022-2025</p>
     </main>
     <script type="text/javascript">
       
       const submitButton = GetElementById("submitBtn");
+      const registerButton = GetElementById("registerBtn");
       const usernameField = GetElementById("floatingName");
       const passwordField = GetElementById("floatingPassword");
 
       function ChangeElementsActivity(doDisable){
         submitButton.disabled = doDisable;
+        registerButton.disabled = doDisable;
         usernameField.disabled = doDisable;
         passwordField.disabled = doDisable;
       }
