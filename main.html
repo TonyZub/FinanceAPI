@@ -53,7 +53,7 @@
       <div class="offcanvas-body">
       </div>
     </div>
-    <div class="main" id="main">
+    <div class="main container" id="main">
     </div>
     <script type="text/javascript">
       
@@ -139,12 +139,7 @@
           } 
           else {
             let responseJSON = JSON.parse(request.response);
-            if(responseJSON.hasNews){
-              mainDiv.innerHTML = responseJSON.newsHTML;
-            }
-            else{
-              alert("An error occured");
-            }
+            mainDiv.innerHTML = responseJSON.content;
           };
         };
         request.onerror = function(request) {
@@ -154,7 +149,21 @@
 
       function LoadDataPage(){
         PreparePage(DATA_PAGE_NAME);
-        //TODO
+        mainDiv.innerHTML = PRELOADER_HTML;
+        let request = MakeRequest("POST", "GetData");
+        request.onload = function() {
+          if (request.status != 200) {
+            console.log(request.status);
+            alert("Server error occured, try later");
+          } 
+          else {
+            let responseJSON = JSON.parse(request.response);
+            mainDiv.innerHTML = responseJSON.content;
+          };
+        };
+        request.onerror = function(request) {
+          alert("Connection error");
+        };
       }
 
       function LoadOperationsPage(){
