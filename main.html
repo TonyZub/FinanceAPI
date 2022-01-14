@@ -147,14 +147,8 @@
           else {
             let responseJSON = JSON.parse(request.response);
             if(responseJSON.isSignedIn){
-              mainDiv.innerHTML = "";
-              var _in = document.getElementById('inject');
-              let divNode = document.createElement('div');
-              let scriptNode = document.createElement('script');
-              divNode.innerHTML = responseJSON.content.html;
-              if(responseJSON.content.js != "") scriptNode.innerHTML = responseJSON.content.js;
-              mainDiv.appendChild(divNode);
-              mainDiv.appendChild(scriptNode);
+              mainDiv.innerHTML = responseJSON.content.html;
+              if(responseJSON.content.hasScripts) OnLoad();
             }
             else{
               OpenURL(SIGNIN_PAGE_URL, PAGE_TARGETS.self);
