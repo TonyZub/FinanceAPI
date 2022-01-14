@@ -92,6 +92,7 @@
       var currentURL = new URL(window.location.href);
       var currentPage = currentURL.searchParams.get(PAGE_NAME_PARAMETER);
       var currentUser;
+      var isUnloadNeeded;
 
       function GetPageData(){
         switch(currentPage){
@@ -135,6 +136,10 @@
         pageNameField.innerHTML = Titleize(pageName);
       }
 
+      function SetUnloadNeed(isNeeded){
+        isUnloadNeeded = isNeeded;
+      }
+
       function PreparePage(pageName){
         CloseMenu();
         SetPageNameParameter(pageName);
@@ -142,6 +147,10 @@
       }
 
       function MakeDataRequest(functionName, pageName){
+        if(isUnloadNeeded){
+          OnUnload();
+          SetUnloadNeed(false);
+        }
         PreparePage(pageName);
         mainDiv.innerHTML = PRELOADER_HTML;
         let request = MakeRequest("POST", functionName);
