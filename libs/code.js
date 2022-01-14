@@ -19,6 +19,8 @@ const PRELOADER_HTML = '<div class="d-flex justify-content-center"><div class="s
 // #region Fields
 
 var cookies = GetCookies();
+var screenHeight = window.screen.height;
+var screenWidth = window.screen.width;
 
 // #endregion
 

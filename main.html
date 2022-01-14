@@ -25,7 +25,10 @@
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
-        <p id="username"></p>
+        <div class="d flex">
+          <p id="username"></p>
+          <button class="btn btn-primary" type="button" id="profile" onclick="LoadProfilePage()">Profile</button>
+        </div>
         <div class="btn-group-vertical w-100 gap-2">
           <button class="btn btn-info" type="button" id="news" onclick="LoadNewsPage()">News</button>
           <button class="btn btn-info" type="button" id="data" onclick="LoadDataPage()">Data</button>
@@ -69,6 +72,7 @@
     <script type="text/javascript">
       
       const PAGE_NAME_PARAMETER = "page";
+      const PROFILE_PAGE_NAME = "profile";
       const NEWS_PAGE_NAME = "news";
       const DATA_PAGE_NAME = "data";
       const OPERATIONS_PAGE_NAME = "operations";
@@ -85,6 +89,9 @@
 
       function GetPageData(){
         switch(currentPage){
+          case PROFILE_PAGE_NAME:
+            LoadProfilePage();
+            break;
           case NEWS_PAGE_NAME:
             LoadNewsPage();
             break;
@@ -140,7 +147,14 @@
           else {
             let responseJSON = JSON.parse(request.response);
             if(responseJSON.isSignedIn){
-              mainDiv.innerHTML = responseJSON.content;
+              mainDiv.innerHTML = "";
+              var _in = document.getElementById('inject');
+              let divNode = document.createElement('div');
+              let scriptNode = document.createElement('script');
+              divNode.innerHTML = responseJSON.content.html;
+              if(responseJSON.content.js != "") scriptNode.innerHTML = responseJSON.content.js;
+              mainDiv.appendChild(divNode);
+              mainDiv.appendChild(scriptNode);
             }
             else{
               OpenURL(SIGNIN_PAGE_URL, PAGE_TARGETS.self);
@@ -150,6 +164,10 @@
         request.onerror = function(request) {
           alert("Connection error");
         };
+      }
+
+      function LoadProfilePage(){
+        MakeDataRequest("GetProfile", PROFILE_PAGE_NAME);
       }
 
       function LoadNewsPage(){
