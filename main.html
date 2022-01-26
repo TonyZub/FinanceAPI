@@ -23,7 +23,7 @@
         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu">
           Menu
         </button>
-        <h1 id="pageName"></h1>
+        <h3 id="pageName"></h3>
         <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasInfo" aria-controls="offcanvasInfo">Info</button>
       </div>
     </nav>
@@ -56,12 +56,20 @@
       <div class="offcanvas-body">
       </div>
     </div>
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasDetails" aria-labelledby="offcanvasDetailsLabel">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNewInput" aria-labelledby="offcanvasNewInputLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasDetailsLabel">Info</h5>
+        <h5 class="offcanvas-title" id="newInputTitle">New input</h5>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
-      <div class="offcanvas-body">
+      <div class="offcanvas-body" id="newInputBody">
+      </div>
+    </div>
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasOldInput" aria-labelledby="offcanvasOldInputLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="oldInputTitle">Old input</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body" id="oldInputBody">
       </div>
     </div>
     <div class="main container" id="main"></div>
@@ -69,7 +77,8 @@
       
       const offcanvasMenu = new bootstrap.Offcanvas(GetElementById("offcanvasMenu"));
       const offcanvasInfo = new bootstrap.Offcanvas(GetElementById("offcanvasInfo"));
-      const offcanvasDetails = new bootstrap.Offcanvas(GetElementById("offcanvasDetails"));
+      const offcanvasNewInput = new bootstrap.Offcanvas(GetElementById("offcanvasNewInput"));
+      const offcanvasOldInput = new bootstrap.Offcanvas(GetElementById("offcanvasOldInput"));
 
       function CloseMenu(){
         offcanvasMenu.hide();
@@ -89,6 +98,10 @@
       const usernameField = GetElementById("username");
       const pageNameField = GetElementById("pageName");
       const mainDiv = GetElementById("main");
+      const newInputTitle = GetElementById("newInputTitle");
+      const newInputBody = GetElementById("newInputBody");
+      const oldInputTitle = GetElementById("oldInputTitle");
+      const oldInputBody = GetElementById("oldInputBody");
       const signOutButton = GetElementById("signOut");
       var currentURL = new URL(window.location.href);
       var currentPage = currentURL.searchParams.get(PAGE_NAME_PARAMETER);
@@ -163,16 +176,20 @@
           else {
             let responseJSON = JSON.parse(request.response);
             if(responseJSON.isSignedIn){
-              mainDiv.innerHTML = "";
-              let divNode = document.createElement('div');
-              divNode.innerHTML = responseJSON.content.html;
-              mainDiv.appendChild(divNode);
               if(responseJSON.content.js != ""){
                 let scriptNode = document.createElement('script');
                 scriptNode.innerHTML = responseJSON.content.js;
                 mainDiv.appendChild(scriptNode);
-                OnLoad();
-              }           
+                OnLoad(responseJSON.content);
+              }  
+              else{
+                mainDiv.innerHTML = ""; 
+                offcanvasNewInput.innerHTML = "";
+                offcanvasOldInput.innerHTML = "";
+                let divNode = document.createElement('div');
+                divNode.innerHTML = responseJSON.content.html;
+                mainDiv.appendChild(divNode);
+              }       
             }
             else{
               OpenURL(SIGNIN_PAGE_URL, PAGE_TARGETS.self);
