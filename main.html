@@ -73,6 +73,140 @@
       </div>
     </div>
     <div class="main container" id="main"></div>
+    <!-- Alert modal -->
+    <div class="modal" tabindex="-1" id="alertModal" data-bs-backdrop="static" data-bs-keyboard="false" 
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Оповещение</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="alertModalText">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Ask modal -->
+    <div class="modal" tabindex="-1" id="askModal" data-bs-backdrop="static" data-bs-keyboard="false" 
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Оповещение</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="askModalText">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="askConfirmBtn" data-bs-dismiss="modal">Да</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Preloader modal -->
+    <div class="modal" tabindex="-1" id="preloaderModal" data-bs-backdrop="static" data-bs-keyboard="false" 
+      aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Оповещение</h5>
+          </div>
+          <div class="modal-body container">
+            <div class="row">
+              <div class="spinner-border text-primary justify-content-center col-sm-1" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <div class="col-sm-11" id="preloaderModalText"></div>
+            </div>
+          </div>   
+        </div>
+      </div>
+    </div>
+    <!-- Toast -->
+    <div class="toast position-fixed bottom-0 end-0 text-white bg-primary border-0" id="toast" role="alert" 
+      aria-live="assertive" aria-atomic="true">
+      <div class="d-flex toast-whole">
+        <div class="toast-body" id="toastText">
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+    <script> // Alert modal scripts
+
+      const ALERT_MODAL_ID = "alertModal";
+      const ALERT_MODAL_TEXT_ID = "alertModalText";
+      var alertModal;
+
+      function Alert(message){
+        document.getElementById(ALERT_MODAL_TEXT_ID).innerHTML = message;
+        ClosePreloader();
+        alertModal.show();
+      }
+
+      function InitAlertModal(){
+        alertModal = new bootstrap.Modal(document.getElementById(ALERT_MODAL_ID), {backdrop: true, keyboard: true});
+      }
+
+    </script>
+    <script> // Ask modal scripts
+
+      const ASK_MODAL_ID = "askModal"
+      const ASK_MODAL_TEXT_ID = "askModalText";
+      const ASK_CONFIRM_BTN_ID = "askConfirmBtn";    
+      var askModal;
+
+      function Ask(functionName, message){
+        document.getElementById(ASK_CONFIRM_BTN_ID).setAttribute( "onClick", "javascript: "+ functionName + ";" );
+        document.getElementById(ASK_MODAL_TEXT_ID).innerHTML = message;
+        askModal.show();
+      }
+
+      function InitAskModal(){
+        askModal = new bootstrap.Modal(document.getElementById(ASK_MODAL_ID), {backdrop: 'static', keyboard: false});
+      }
+
+    </script>
+    <script> // Preloader modal scripts
+
+      const PRELOADER_MODAL_ID = "preloaderModal"
+      const PRELOADER_MODAL_TEXT_ID = "preloaderModalText";       
+      var preloaderModal;
+
+      function OpenPreloader(message){
+        document.getElementById(PRELOADER_MODAL_TEXT_ID).innerHTML = message;
+        preloaderModal.show();
+      }
+
+      function ClosePreloader(){
+        preloaderModal.hide();
+      }
+
+      function InitPreloaderModal(){
+        preloaderModal = new bootstrap.Modal(document.getElementById(PRELOADER_MODAL_ID), {backdrop: 'static', keyboard: false});
+      }
+
+    </script>
+    <script> // Toast Scripts
+
+      const TOAST_ID = "toast";
+      const TOAST_TEXT_ID = "toastText";
+      var toast;
+
+      function InitToast(){
+        toast = new bootstrap.Toast(document.getElementById(TOAST_ID)); 
+      }
+
+      function AlertToast(message){
+        document.getElementById(TOAST_TEXT_ID).innerHTML = message;
+        toast.show();
+      }
+
+    </script>
     <script type="text/javascript">
       
       const offcanvasMenu = new bootstrap.Offcanvas(GetElementById("offcanvasMenu"));
@@ -261,6 +395,10 @@
       }
 
       window.onload = function() {
+        InitAlertModal();
+        InitAskModal();
+        InitPreloaderModal();
+        InitToast();
         SetUser();
         GetPageData();
       };
