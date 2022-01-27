@@ -42,7 +42,7 @@ body {
   user-select: none;
 }
 
-.toast {
+.toast-container {
   z-index: 1060 !important;
 }
 
