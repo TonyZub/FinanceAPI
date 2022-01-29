@@ -244,6 +244,39 @@
       var currentUser;
       var isUnloadNeeded;
 
+      function GetPageNameRus(pageName){
+        let pageNameRus = pageName;
+        switch(pageName){
+          case PROFILE_PAGE_NAME:
+            pageNameRus = "Профиль";
+            break;
+          case NEWS_PAGE_NAME:
+            pageNameRus = "Новости";
+            break;
+          case DATA_PAGE_NAME:
+            pageNameRus = "Данные";
+            break;
+          case OPERATIONS_PAGE_NAME:
+            pageNameRus = "Операции факт";
+            break;
+          case PLANS_PAGE_NAME:
+            pageNameRus = "Операции план";
+            break;
+          case WALLETS_PAGE_NAME:
+            pageNameRus = "Кошельки";
+            break;
+          case ARTICLES_PAGE_NAME:
+            pageNameRus = "Статьи";
+            break;
+          case PROJECTS_PAGE_NAME:
+            pageNameRus = "Проекты";
+            break;
+          default:
+            break;
+        }
+        return pageNameRus;
+      }
+
       function GetPageData(){
         switch(currentPage){
           case PROFILE_PAGE_NAME:
@@ -286,7 +319,7 @@
       }
 
       function SetPageName(pageName){
-        pageNameField.innerHTML = Titleize(pageName);
+        pageNameField.innerHTML = Titleize(GetPageNameRus(pageName));
       }
 
       function SetUnloadNeed(isNeeded){
