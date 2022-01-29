@@ -315,14 +315,12 @@
                 scriptNode.innerHTML = responseJSON.content.js;
                 mainDiv.appendChild(scriptNode);
                 OnLoad(responseJSON.content);
+                if(responseJSON.content.html != undefined){
+                  SetBaseHTML(responseJSON.content.html);
+                }
               }  
               else{
-                mainDiv.innerHTML = ""; 
-                offcanvasNewInput.innerHTML = "";
-                offcanvasOldInput.innerHTML = "";
-                let divNode = document.createElement('div');
-                divNode.innerHTML = responseJSON.content.html;
-                mainDiv.appendChild(divNode);
+                SetBaseHTML(responseJSON.content.html);
               }       
             }
             else{
@@ -333,6 +331,15 @@
         request.onerror = function(request) {
           alert("Connection error");
         };
+      }
+
+      function SetBaseHTML(html){
+        mainDiv.innerHTML = ""; 
+        offcanvasNewInput.innerHTML = "";
+        offcanvasOldInput.innerHTML = "";
+        let divNode = document.createElement('div');
+        divNode.innerHTML = html;
+        mainDiv.appendChild(divNode);
       }
 
       function LoadProfilePage(){
