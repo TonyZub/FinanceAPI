@@ -13,18 +13,18 @@
     <main class="form-signin">
       <form name="signinForm" onsubmit="event.preventDefault(); TrySignIn();">
         <img class="mb-4 img-fluid img-thumbnail rounded" src="https://tonyzub.github.io/FinanceAPI/assets/images/favicon.png" alt="" width="152" height="152">
-        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <h1 class="h3 mb-3 fw-normal">Вход в систему</h1>
         <div class="form-floating">
-          <input required type="text" name="username" class="form-control" id="floatingName" placeholder="Username">
-          <label for="floatingName">Username</label>
+          <input required type="text" name="username" class="form-control" id="floatingName" placeholder="Имя пользователя">
+          <label for="floatingName">Имя пользователя</label>
         </div>
         <div class="form-floating">
-          <input required type="password" class="form-control" id="floatingPassword" placeholder="Password">
-          <label for="floatingPassword">Password</label>
+          <input required type="password" class="form-control" id="floatingPassword" placeholder="Пароль">
+          <label for="floatingPassword">Пароль</label>
         </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit" id="submitBtn">Sign in</button>
+        <button class="w-100 btn btn-lg btn-primary" type="submit" id="submitBtn">Войти</button>
       </form>
-      <a class="w-100 btn btn-primary btn-lg" role="button" href="register" id="registerBtn">Register</a>
+      <a class="w-100 btn btn-primary btn-lg" role="button" href="register" id="registerBtn">Регистрация</a>
       <p class="mt-5 mb-3 text-muted">© 2022-2025</p>
     </main>
     <script type="text/javascript">
@@ -49,7 +49,7 @@
         request.onload = function() {
           if (request.status != 200) {
             console.log(request.status);
-            alert("Server error occured, try later");
+            alert("Ошибка сервера, попробуйте позже");
           } 
           else {
             let responseJSON = JSON.parse(request.response);
@@ -59,13 +59,13 @@
               OpenURL(MAIN_PAGE_URL, PAGE_TARGETS.self);
             }
             else{
-              alert("Wrong email or password");
+              alert("Неверное имя пользователя или пароль");
             }
           };
           ChangeElementsActivity(false);
         };
         request.onerror = function(request) {
-          alert("Connection error");
+          alert("Ошибка соединения");
           ChangeElementsActivity(false);
         };
       }
