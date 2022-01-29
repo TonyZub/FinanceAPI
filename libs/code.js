@@ -108,18 +108,11 @@ function GetELementsByName(name){
 }
 
 function Titleize(str) {
-    let upper = true
-    let newStr = ""
-    for (let i = 0, l = str.length; i < l; i++) {
-        if (str[i] == " ") {
-            upper = true
-            newStr += str[i]
-            continue
-        }
-        newStr += upper ? str[i].toUpperCase() : str[i].toLowerCase()
-        upper = false
-    }
-    return newStr
+  let upperString = "";
+  for(let i = 0; i < str.length; i++){
+    upperString += str.substring(i, i+1).toUpperCase();
+  }
+  return upperString
 }
 
 // #endregion
