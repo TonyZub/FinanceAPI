@@ -21,6 +21,7 @@ const PRELOADER_HTML = '<div class="d-flex justify-content-center mt-4"><div cla
 var cookies = GetCookies();
 var screenHeight = window.screen.height;
 var screenWidth = window.screen.width;
+var today = GetTodayDateString();
 
 // #endregion
 
@@ -90,6 +91,17 @@ function OpenURL(URL, target){
 
 
 // #region Service functions
+
+function GetTodayDateString(){
+  let today = new Date();
+  let year = today.getFullYear();
+  let month = today.getMonth() + 1;
+  if(month.toString().length == 1) month = "0" + month.toString();
+  let date = today.getDate();
+  if(date.toString().length == 1) date = "0" + date.toString();
+  let string = year + "-" + month + "-" + date;
+  return string;
+}
 
 function DelayCall(delegate, seconds, doRepeat){
   return doRepeat ? setInterval(() => {delegate()},seconds * 1000) : setTimeout(() => {delegate()},seconds * 1000); 
