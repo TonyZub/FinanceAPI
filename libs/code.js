@@ -92,15 +92,18 @@ function OpenURL(URL, target){
 
 // #region Service functions
 
-function GetTodayDateString(){
-  let today = new Date();
-  let year = today.getFullYear();
-  let month = today.getMonth() + 1;
+function FormatDateForHTML(dateObj){
+  let year = dateObj.getFullYear();
+  let month = dateObj.getMonth() + 1;
   if(month.toString().length == 1) month = "0" + month.toString();
-  let date = today.getDate();
+  let date = dateObj.getDate();
   if(date.toString().length == 1) date = "0" + date.toString();
   let string = year + "-" + month + "-" + date;
   return string;
+}
+
+function GetTodayDateString(){
+  return FormatDateForHTML(new Date());
 }
 
 function DelayCall(delegate, seconds, doRepeat){
