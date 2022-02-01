@@ -122,6 +122,10 @@ function GetELementsByName(name){
   return document.getElementsByName(name);
 }
 
+function GetElementsByTagName(tagName){
+  return document.getElementsByTagName(tagName);
+}
+
 function Titleize(str) {
   let upperString = "";
   for(let i = 0; i < str.length; i++){
