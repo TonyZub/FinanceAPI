@@ -48,7 +48,9 @@
           <button class="btn btn-info" type="button" id="operations" onclick="LoadPlansPage()">Операции план</button>
           <button class="btn btn-secondary" type="button" id="wallets" onclick="LoadWalletsPage()">Кошельки</button>
           <button class="btn btn-secondary" type="button" id="articles" onclick="LoadArticlesPage()">Статьи</button>
-          <button class="btn btn-secondary" type="button" id="projectss" onclick="LoadProjectsPage()">Проекты</button>
+          <button class="btn btn-secondary" type="button" id="projects" onclick="LoadProjectsPage()">Тэги 1</button>
+          <button class="btn btn-secondary" type="button" id="projects" onclick="LoadCategoriesPage()">Тэги 2</button>
+          <button class="btn btn-secondary" type="button" id="projects" onclick="LoadTagsPage()">Тэги 3</button>
           <button class="btn btn-primary" type="button" id="signOut" onclick="TrySignOut()">Выйти</button>
         </div>
       </div>
@@ -235,6 +237,8 @@
       const WALLETS_PAGE_NAME = "wallets";
       const ARTICLES_PAGE_NAME = "articles";
       const PROJECTS_PAGE_NAME = "projects";
+      const CATEGORIES_PAGE_NAME = "categories";
+      const TAGS_PAGE_NAME = "tags";
       const usernameField = GetElementById("username");
       const pageNameField = GetElementById("pageName");
       const mainDiv = GetElementById("main");
@@ -273,7 +277,13 @@
             pageNameRus = "Статьи";
             break;
           case PROJECTS_PAGE_NAME:
-            pageNameRus = "Проекты";
+            pageNameRus = "Тэги 1";
+            break;
+          case CATEGORIES_PAGE_NAME:
+            pageNameRus = "Тэги 2";
+            break;
+          case TAGS_PAGE_NAME:
+            pageNameRus = "Тэги 3";
             break;
           default:
             break;
@@ -414,6 +424,14 @@
 
       function LoadProjectsPage(){
         MakeDataRequest("GetProjects", PROJECTS_PAGE_NAME);
+      }
+
+      function LoadCategoriesPage(){
+        MakeDataRequest("GetCategories", CATEGORIES_PAGE_NAME);
+      }
+
+      function LoadTagsPage(){
+        MakeDataRequest("GetTags", TAGS_PAGE_NAME);
       }
 
       function TrySignOut(){
