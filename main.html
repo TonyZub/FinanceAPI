@@ -39,7 +39,7 @@
       <div class="offcanvas-body">
         <div class="w-100 d-flex mb-4">
           <input readonly class="form-control-plaintext w-75 fw-bold" placeholder="Пользователь" type="text" id="username">
-          <button class="btn btn-primary w-25" type="button" id="profile" onclick="LoadProfilePage()">Профиль</button> 
+          <button class="btn btn-primary w-25" type="button" id="profile" onclick="LoadProfilePage()">Профиль</button>
         </div>
         <div class="btn-group-vertical w-100 gap-2">
           <button class="btn btn-info" type="button" id="news" onclick="LoadNewsPage()">Новости</button>
@@ -48,9 +48,7 @@
           <button class="btn btn-info" type="button" id="operations" onclick="LoadPlansPage()">Операции план</button>
           <button class="btn btn-secondary" type="button" id="wallets" onclick="LoadWalletsPage()">Кошельки</button>
           <button class="btn btn-secondary" type="button" id="articles" onclick="LoadArticlesPage()">Статьи</button>
-          <button class="btn btn-secondary" type="button" id="projects" onclick="LoadProjectsPage()">Теги 1</button>
-          <button class="btn btn-secondary" type="button" id="projects" onclick="LoadCategoriesPage()">Теги 2</button>
-          <button class="btn btn-secondary" type="button" id="projects" onclick="LoadTagsPage()">Теги 3</button>
+          <button class="btn btn-secondary" type="button" id="tags" onclick="LoadTagsPage()">Теги</button>
           <button class="btn btn-primary" type="button" id="signOut" onclick="TrySignOut()">Выйти</button>
         </div>
       </div>
@@ -236,8 +234,6 @@
       const PLANS_PAGE_NAME = "plans";
       const WALLETS_PAGE_NAME = "wallets";
       const ARTICLES_PAGE_NAME = "articles";
-      const PROJECTS_PAGE_NAME = "projects";
-      const CATEGORIES_PAGE_NAME = "categories";
       const TAGS_PAGE_NAME = "tags";
       const usernameField = GetElementById("username");
       const pageNameField = GetElementById("pageName");
@@ -276,14 +272,8 @@
           case ARTICLES_PAGE_NAME:
             pageNameRus = "Статьи";
             break;
-          case PROJECTS_PAGE_NAME:
-            pageNameRus = "Теги 1";
-            break;
-          case CATEGORIES_PAGE_NAME:
-            pageNameRus = "Теги 2";
-            break;
           case TAGS_PAGE_NAME:
-            pageNameRus = "Теги 3";
+            pageNameRus = "Теги";
             break;
           default:
             break;
@@ -314,8 +304,8 @@
           case ARTICLES_PAGE_NAME:
             LoadArticlesPage();
             break;
-          case PROJECTS_PAGE_NAME:
-            LoadProjectsPage();
+          case TAGS_PAGE_NAME:
+            LoadTagsPage();
             break;
           default:
             LoadNewsPage();
@@ -420,14 +410,6 @@
 
       function LoadArticlesPage(){
         MakeDataRequest("GetArticles", ARTICLES_PAGE_NAME);
-      }
-
-      function LoadProjectsPage(){
-        MakeDataRequest("GetProjects", PROJECTS_PAGE_NAME);
-      }
-
-      function LoadCategoriesPage(){
-        MakeDataRequest("GetCategories", CATEGORIES_PAGE_NAME);
       }
 
       function LoadTagsPage(){
