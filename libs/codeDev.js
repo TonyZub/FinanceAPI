@@ -1,6 +1,6 @@
 // #region Constants
 
-const REQ_URL = "https://script.google.com/macros/s/ya29.A0ARrdaM__vfzh5r7oYJrceNERmhvxTYtj7fZu1-uUutyGN7Dm_YtiYt0O9i-bV5gVHB7YCCgN4VD8As00tXFeEvRoVK4qfKSRDP3F8DKRMpcg5YkXXOEiln3KGFT-13SmcFJb1fE_QoGvd5xgeJCOvRJl4znkEw/dev";
+const REQ_URL = "https://script.google.com/macros/s/AKfycbziyGYQ3TQpPeNHLcpY0xDhtPtfGCWOJBnRhsmkz2A/dev?access_token=";
 const ROOT_URL = "https://tonyzub.github.io/FinanceAPI/";
 const NOT_FOUND_PAGE_URL = "notFound";
 const SIGNIN_PAGE_URL = "signin";
@@ -18,6 +18,7 @@ const PRELOADER_HTML = '<div class="d-flex justify-content-center mt-4"><div cla
 
 // #region Fields
 
+var accessToken = new URL(window.location.href).searchParams.get("access");
 var cookies = GetCookies();
 var screenHeight = window.screen.height;
 var screenWidth = window.screen.width;
@@ -47,7 +48,7 @@ function SetCookie(name, value){
 function MakeRequest(requestType, functionName, parameter){
   let request = new XMLHttpRequest();
   let requestBody = JSON.stringify(new Object({token: cookies["Token"], functionName: functionName, parameter: parameter}));
-  request.open(requestType, REQ_URL);
+  request.open(requestType, REQ_URL + accessToken);
   request.send(requestBody);   
   return request;
 }
